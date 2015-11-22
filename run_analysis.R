@@ -9,7 +9,7 @@
                 download.file(fileURL, filename, method="curl")
         }  
         if (!dir.exists("UCI HAR Dataset")) { 
-                unzip(filename) 
+                unzip(filename, exdir ="./UCI HAR Dataset") 
         }
         #
         # reading data labels and features 
@@ -34,7 +34,7 @@
         testDatalabels <- read.table("./UCI HAR Dataset/test/y_test.txt")
         subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt")
         
-        # 1) Merge the two dataset 
+        # Merge the two dataset 
         DataAll <-  rbind(trainData, testData)
         subjectAll <- rbind(subject_train, subject_test)
         Datalabels <- rbind(trainDatalabels, testDatalabels) 
@@ -43,11 +43,9 @@
         
         
         
-        ##extract_features <- grepl("mean|std", features)
+        ##
         
         extractFeatures <- grep(".*mean.*|.*std.*", features)
-        extractFeatures.names <- features[extractFeatures]
-        
        
         
         names(DataAll) <-  features
